@@ -1,8 +1,22 @@
 var express = require('express');
+
+
+var db = require('mongoskin').db('mongodb://localhost:27017/Cms', {native_parser:true});
+
+
 var router = express.Router();
 
 /* GET users listing. */
 router.get('/:id', function(req, res, next) {
+
+
+  db.collection('myCollection').find().toArray(function(err, result) {
+    if (err) throw err;
+    console.log(result);
+
+    res.json(result);
+  });
+
 
   var id = req.params.id;
 
@@ -16,7 +30,7 @@ router.get('/:id', function(req, res, next) {
       msg:'respond with a resource'+new Date().getTime()
   }
 
-  res.json(resObj);
+  
 
   // res.send('respond with a resource');
 });
